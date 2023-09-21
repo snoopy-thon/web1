@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style> 
+   .checkbox-container {
+      float: left;
+      margin-right: 10px;
+    }
+   
+  
+    textarea {
+      float: left;
+      vertical-align: top; /* 체크박스와 텍스트를 위쪽 정렬 */
+    }
+    </style>
+  
+</head>
+<body>
+  <!--1. 항목별 체크박스를 화면에 출력한다.--> 
+  <!--2. 각 해당하는 체크박스를 선택하면, 화면에 출력한다.--> 
+  <!--3. "전체" 체크박스를 선택할 경우, 나머지 체크박스가 전부 선택되고, 선택된 체크박스가 출력된다.--> 
+  <!--4. 체크를 해제하면 화면에서 없앤다.--> 
+  <div class="checkbox-container">
+    <input type='checkbox' 
+          id="selectAll" 
+          onclick='selectAllCheckboxes(event)' />전체
+    <br>
+
+    <input type='checkbox' 
+          name='sports' 
+          value='농구' 
+          onclick='getCheckboxValue(event)' />농구
+    <br>
+
+    <input type='checkbox' 
+          name='sports' 
+          value='배구' 
+          onclick='getCheckboxValue(event)' />배구
+    <br>
+
+    <input type='checkbox' 
+          name='sports' 
+          value='야구' 
+          onclick='getCheckboxValue(event)' />야구
+    <br>
+
+    <input type='checkbox' 
+          name='sports' 
+          value='축구' 
+          onclick='getCheckboxValue(event)' />축구
+    <br>
+</div>
+
+  <div>
+    <textarea id='result'  cols="10" rows="8"></textarea>
+  </div>
+  
+  <script>
+
+    // 선택된 체크박스 출력하기
+    function getCheckboxValue()  {
+    const query = 'input[name="sports"]:checked'; // 체크된 애를 쿼리에 넣기
+    const checkboxes = document.querySelectorAll(query); // 체크된 애들 선택하기
+    let result = '';
+    
+    for(const i of checkboxes){ // check된 애들 result에 넣기
+      result += i.value + ' ';
+    }
+    
+    document.getElementById('result').innerText
+      = result;
+    }
+
+    // "전체" 선택할 경우
+    function selectAllCheckboxes(event) { 
+      const checkboxes = document.querySelectorAll('input[name="sports"]');
+      const selectAllCheckbox = document.getElementById('selectAll');
+      const isChecked = selectAllCheckbox.checked; // "전체"가 체크되어있나 확인
+      
+      for(const i of checkboxes){// "전체" 체크박스와 나머지 체크박스의 상태를 같게 해준다
+        i.checked = isChecked;
+      }
+
+      getCheckboxValue(); // 선택된 체크박스 출력하기
+    }
+  </script>
+</body>
+</html>
