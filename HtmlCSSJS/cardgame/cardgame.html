@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- 
+    카드게임 만들기
+    1. 버튼 3개(show, hide, shuffle)
+       카드 52장 화면에 출력
+    2. 뒤집어놓기 - 카드 뒷면으로 다 바꾸기
+    3. shuffle 버튼을 누르면 카드가 랜덤으로 섞인다.
+    4. 2장 카드를 클릭하면 뒤집어진다.
+    5. 숫자, 색깔
+      - 같으면 뒤집어진 채로
+      - 다르면 다시 뒤집는다.
+   -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+   img{
+    width : 100px;
+   }
+  </style>
+</head>
+<body>
+  <button onclick="show()">show</button>
+  <button onclick="hide()">hide</button>
+  <button onclick="shuffle()">shuffle</button>
+  <div class="card">
+    <!-- <img id="cardImg" src="card_img/0.png"/> -->
+  </div>
+    <script>
+      window.onload = function(){
+
+        
+      }
+      
+      // 1. 카드 52장 보여주기
+      function show(){
+        const card = document.querySelector('.card');
+        console.dir(card);
+        var tmp = "";
+        for(let i=0; i<52; i++){
+            tmp += "<img id=cardImg"+i+" src=card_img/"+i+".png>";
+        }
+        card.innerHTML = tmp;
+      }
+      // 2. 카드 뒷면으로 뒤집기
+      function hide(){
+        const card = document.querySelector('.card');
+        // 카드 52개를 뒷면 이미지로 바꾼다.
+        var tmp = "";
+        for(let i=0; i<52; i++){
+          tmp += "<img id=cardImg"+i+" src=card_img/back.png>";
+        }
+      
+      card.innerHTML = tmp;
+      }
+      // 3. 카드 섞기 
+      function shuffle(){
+      // 랜덤으로 카드 위치가 바뀌어야 함.
+      // 랜덤값이 중복되면 안됨.
+      
+        const card = document.querySelector('.card');
+        var tmp = "";
+
+        // arr 배열 생성, 0~51까지의 값 순서대로 넣기
+        const arr = [];
+        for(var i=0; i<52; i++){
+          arr[i] = i;
+        }
+        // 랜덤 추출시 중복을 피하기 위한 방법  
+        // 배열 인덱스 랜덤 추출 -> randomVal
+        // 카드이미지를 arr[randomVal].png로 바꿈
+        // arr.splice -> arr배열에서 arr[randomVal]를 삭제  
+        for(var i=0; i<52; i++){
+          let randomVal = Math.floor(Math.random()*arr.length);
+          tmp += `<img id=cardImg${i} src=card_img/${arr[randomVal]}.png>`;
+          arr.splice(randomVal,1);
+        }
+        
+        card.innerHTML = tmp;
+      }
+    </script>
+</body>
+</html>
